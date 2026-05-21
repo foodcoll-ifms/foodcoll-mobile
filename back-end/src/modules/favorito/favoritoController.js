@@ -1,12 +1,11 @@
 import { ObjectId } from "mongodb";
-import { validaFavorito} from "../services/favoritoService.js";
-import { mostarFavorito } from "../models/favoritoModel.js";
+import { validaFavorito} from "./favoritoService.js";
+import { mostarFavorito } from "./favoritoModel.js";
 
 export async function favoritoArmazena(req, res, next) {
   const userId = new ObjectId('69edfa784d1ef2c789095364');
   const colocacoesChave = req.params.termo;
 
-  console.log("favorito controller " + colocacoesChave );
 
   try {
     const resultado = await validaFavorito(userId, colocacoesChave);
@@ -21,7 +20,6 @@ export async function favoritoMostra(req, res, next) {
   const userId = new ObjectId('69edfa784d1ef2c789095364');
   const colocacoesId = new ObjectId(req.params.ID);
 
-  console.log("favorito controller" + colocacoesId );
 
   try {
     const resultado = await mostarFavorito(userId);
