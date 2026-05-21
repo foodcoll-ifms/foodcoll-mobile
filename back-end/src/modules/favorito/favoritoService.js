@@ -1,5 +1,4 @@
-import { inserirFavorito, deleteFavorito, mostarFavorito } from "../models/favoritoModel.js";
-import { fecha, conecta } from "../../config/db.js";
+import { inserirFavorito, deleteFavorito, mostarFavorito } from "./favoritoModel.js";
 
 export async function validaFavorito(usuarioId, colocacoesChave) {
   console.log("favorito service");
