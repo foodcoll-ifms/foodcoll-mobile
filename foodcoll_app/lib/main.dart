@@ -21,14 +21,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: '/home',
-      theme: ThemeData(
-        pageTransitionsTheme: PageTransitionsTheme(
-          builders: {
-            for (final platform in TargetPlatform.values)
-              platform: const _FadeTransitionsBuilder(),
-          },
-        ),
-      ),
+      theme: ThemeData(),
       routes: {
         '/home': (_) => const HomePage(),
         '/search': (_) => const SearchPage(),
@@ -36,26 +29,13 @@ class MyApp extends StatelessWidget {
         '/settings': (_) => const SettingsPage(),
         '/collocations': (context) {
           final args = ModalRoute.of(context)!.settings.arguments;
-          final collocation = args is CollocationModel
-              ? args
-              : CollocationModel(colocacao: args as String, traducao: '');
+          final collocation =
+              args is CollocationModel
+                  ? args
+                  : CollocationModel(colocacao: args as String, traducao: '');
           return CollocationsPage(collocation: collocation);
         },
       },
     );
   }
-}
-
-class _FadeTransitionsBuilder extends PageTransitionsBuilder {
-  const _FadeTransitionsBuilder();
-
-  @override
-  Widget buildTransitions<T>(
-    PageRoute<T> route,
-    BuildContext context,
-    Animation<double> animation,
-    Animation<double> secondaryAnimation,
-    Widget child,
-  ) =>
-      FadeTransition(opacity: animation, child: child);
 }
