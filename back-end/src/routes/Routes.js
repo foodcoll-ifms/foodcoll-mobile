@@ -3,6 +3,7 @@ import { pesquisa } from "../modules/pesquisa/pesquisaController.js";
 import { recomentacao, termoCompleto } from "../modules/termo/termoController.js";
 import { favoritoArmazena, favoritoMostra } from "../modules/favorito/favoritoController.js";
 import { topBuscas } from "../modules/topBusca/topBuscaController.js";
+import { glossario } from "../modules/glossario/glossarioController.js";
 
 const router= express.Router();
 
@@ -12,5 +13,6 @@ router.get('/favorito', favoritoMostra);
 router.get('/topBuscas', topBuscas);
 router.get('/detalheTermos/:termo', termoCompleto);
 router.get('/recomendacao/:termo', recomentacao);
+router.get('/glossario', glossario);
 
 export { router };
