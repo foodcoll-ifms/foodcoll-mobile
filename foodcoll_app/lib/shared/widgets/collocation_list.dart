@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../features/collocations/presentation/pages/collocations_page.dart';
 import '../../shared/models/collocation_model.dart';
+import '../../core/state/historico_controller.dart';
 import 'collocation_card.dart';
 
 class CollocationList extends StatelessWidget {
@@ -42,12 +43,11 @@ class CollocationList extends StatelessWidget {
 
         return InkWell(
           onTap: () {
+            HistoricoController.instance.adicionar(collocation);
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => CollocationsPage(
-                  collocation: collocation,
-                ),
+                builder: (context) => CollocationsPage(collocation: collocation),
               ),
             );
           },
