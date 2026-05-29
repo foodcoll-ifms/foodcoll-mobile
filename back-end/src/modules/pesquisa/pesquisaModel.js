@@ -15,6 +15,7 @@ export async function pesquisaDBC(queryServer) {
       $project: {
         _id: 0,
         colocacao: 1,
+        traducao: 1,
       },
     },
     {
