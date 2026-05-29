@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import '../../../../core/base_page.dart';
 import '../../../../core/state/favorites_controller.dart';
+import '../../../../shared/models/collocation_model.dart';
 import '../../../../shared/widgets/page_header.dart';
 import '../widgets/example_card.dart';
 
 class CollocationsPage extends StatelessWidget {
-  final String collocation;
+  final CollocationModel collocation;
 
   const CollocationsPage({super.key, required this.collocation});
 
@@ -17,7 +18,7 @@ class CollocationsPage extends StatelessWidget {
       body: AnimatedBuilder(
         animation: FavoritesController.instance,
         builder: (context, _) {
-          final isFavorited = FavoritesController.instance.isFavorite(collocation);
+          final isFavorited = FavoritesController.instance.isFavorite(collocation.colocacao);
 
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -43,7 +44,7 @@ class CollocationsPage extends StatelessWidget {
       children: [
         Expanded(
           child: PageHeader(
-            title: collocation,
+            title: collocation.colocacao,
             onBack: () => Navigator.pop(context),
           ),
         ),
@@ -55,7 +56,7 @@ class CollocationsPage extends StatelessWidget {
           ),
         ),
         IconButton(
-          onPressed: () => debugPrint('Ouvir pronúncia de $collocation'),
+          onPressed: () => debugPrint('Ouvir pronúncia de ${collocation.colocacao}'),
           icon: const Icon(Icons.volume_up, color: Color(0xFF1FA7A6)),
         ),
       ],
@@ -74,9 +75,11 @@ class CollocationsPage extends StatelessWidget {
   }
 
   Widget _buildTranslation() {
-    return const Text(
-      'Tradução ainda não disponível',
-      style: TextStyle(
+    return Text(
+      collocation.traducao.isNotEmpty
+          ? collocation.traducao
+          : 'Tradução não disponível',
+      style: const TextStyle(
         fontFamily: 'Inter',
         fontSize: 16,
         color: Colors.black,
@@ -84,34 +87,34 @@ class CollocationsPage extends StatelessWidget {
     );
   }
 
-Widget _buildExamples() {
-  return const Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Text(
-        'Exemplo(s) de uso',
-        style: TextStyle(
-          fontFamily: 'Inter',
-          fontSize: 18,
-          color: Color(0xFF4A4F55),
-          fontWeight: FontWeight.bold,
+  Widget _buildExamples() {
+    return const Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Exemplo(s) de uso',
+          style: TextStyle(
+            fontFamily: 'Inter',
+            fontSize: 18,
+            color: Color(0xFF4A4F55),
+            fontWeight: FontWeight.bold,
+          ),
         ),
-      ),
-      SizedBox(height: 12),
-      ExampleCard(
-        label: 'Inglês',
-        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent interdum malesuada viverra. Nunc et ipsum vel velit scelerisque tincidunt sit amet ac velit. ',
-        backgroundColor: Color(0xFFA8D5D4),
-      ),
-      SizedBox(height: 16),
-      ExampleCard(
-        label: 'Português',
-        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent interdum malesuada viverra. Nunc et ipsum vel velit scelerisque tincidunt sit amet ac velit. ',
-        backgroundColor: Color(0xFFE9EEF0),
-      ),
-    ],
-  );
-}
+        SizedBox(height: 12),
+        ExampleCard(
+          label: 'Inglês',
+          text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+          backgroundColor: Color(0xFFA8D5D4),
+        ),
+        SizedBox(height: 16),
+        ExampleCard(
+          label: 'Português',
+          text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+          backgroundColor: Color(0xFFE9EEF0),
+        ),
+      ],
+    );
+  }
 
   Widget _buildLearnMore() {
     return ListTile(

@@ -1,25 +1,27 @@
 import 'package:flutter/material.dart';
+import '../../../shared/models/collocation_model.dart';
 
 class FavoritesController extends ChangeNotifier {
   FavoritesController._();
 
   static final FavoritesController instance = FavoritesController._();
 
-  final Set<String> _favorites = {};
+  final Map<String, CollocationModel> _favorites = {};
 
-  Set<String> get favorites => _favorites;
+  Map<String, CollocationModel> get favorites => _favorites;
 
-  bool isFavorite(String collocation) {
-    return _favorites.contains(collocation);
+  bool isFavorite(String colocacao) {
+    return _favorites.containsKey(colocacao);
   }
 
-  void toggleFavorite(String collocation) {
-    if (_favorites.contains(collocation)) {
-      _favorites.remove(collocation);
+  void toggleFavorite(CollocationModel collocation) {
+    if (_favorites.containsKey(collocation.colocacao)) {
+      _favorites.remove(collocation.colocacao);
     } else {
-      _favorites.add(collocation);
+      _favorites[collocation.colocacao] = collocation;
     }
-
     notifyListeners();
   }
+
+  List<CollocationModel> get favoritesList => _favorites.values.toList();
 }

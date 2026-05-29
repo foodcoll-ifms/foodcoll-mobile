@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-
 import '../../../../core/base_page.dart';
 import '../../../../core/state/favorites_controller.dart';
+import '../../../../shared/models/collocation_model.dart';
 import '../../../../shared/widgets/collocation_list.dart';
 import '../../data/search_service.dart';
 import '../widgets/search_input.dart';
@@ -18,7 +18,7 @@ class _SearchPageState extends State<SearchPage> {
   final _searchController = TextEditingController();
   final _searchService = SearchService();
 
-  List<String> _resultados = [];
+  List<CollocationModel> _resultados = [];
   bool _isLoading = false;
   String? _erro;
 
@@ -30,29 +30,35 @@ class _SearchPageState extends State<SearchPage> {
 
   Future<void> _buscar(String query) async {
     if (query.trim().isEmpty) {
-      setState(() {
-        _resultados = [];
-        _erro = null;
-      });
+      if (mounted) {
+        setState(() {
+          _resultados = [];
+          _erro = null;
+        });
+      }
       return;
     }
 
-    setState(() {
-      _isLoading = true;
-      _erro = null;
-    });
+    if (mounted) {
+      setState(() {
+        _isLoading = true;
+        _erro = null;
+      });
+    }
 
     try {
       final resultados = await _searchService.buscar(query);
-      setState(() => _resultados = resultados);
+      if (mounted) setState(() => _resultados = resultados);
     } catch (e) {
-      setState(() {
-        _resultados = [];
-        _erro = 'Não foi possível conectar ao servidor.';
-      });
+      if (mounted) {
+        setState(() {
+          _resultados = [];
+          _erro = 'Não foi possível conectar ao servidor.';
+        });
+      }
       debugPrint('Erro ao buscar: $e');
     } finally {
-      setState(() => _isLoading = false);
+      if (mounted) setState(() => _isLoading = false);
     }
   }
 
@@ -62,16 +68,19 @@ class _SearchPageState extends State<SearchPage> {
     }
 
     if (_erro != null) {
-      return Center(child: Text(_erro!, style: const TextStyle(color: Colors.red)));
+      return Center(
+        child: Text(_erro!, style: const TextStyle(color: Colors.red)),
+      );
     }
 
     return AnimatedBuilder(
       animation: FavoritesController.instance,
-      builder: (context, _) => CollocationList(
-        collocations: _resultados,
-        isFavorited: FavoritesController.instance.isFavorite,
-        onFavoriteToggle: FavoritesController.instance.toggleFavorite,
-      ),
+      builder:
+          (context, _) => CollocationList(
+            collocations: _resultados,
+            isFavorited: FavoritesController.instance.isFavorite,
+            onFavoriteToggle: FavoritesController.instance.toggleFavorite,
+          ),
     );
   }
 
