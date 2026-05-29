@@ -1,4 +1,4 @@
-import { detalheTermo } from "./termoModel";
+import { detalheTermo } from "./termoModel.js";
 
 export async function termoCompleto(req, res, next) {
   const termo = req.params.termo;

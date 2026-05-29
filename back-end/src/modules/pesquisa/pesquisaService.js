@@ -1,4 +1,4 @@
-import { pesquisaDBC } from "./pesquisa/pesquisaModel.js";
+import { pesquisaDBC } from "./pesquisaModel.js";
 import { mostrarHistorico, insererirHistoricoDB } from "../../modules/historico/historicoModel.js";
 
 export async function validaPesquisa(query) {

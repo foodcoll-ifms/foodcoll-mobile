@@ -1,4 +1,4 @@
-import { collColocacoes } from "../config/db.js";
+import { collColocacoes } from "../../config/db.js";
 
 export async function pesquisaDBC(queryServer) {
   const pipeline = [

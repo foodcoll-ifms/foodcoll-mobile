@@ -1,6 +1,6 @@
 //importação
 import { guardaHistorico, validaPesquisa } from "./pesquisaService.js";
-import { vericivaTop } from "../topBusca/TopBuscasService.js";
+import { vericivaTop } from "../topBusca/TopBuscaService.js";
 
 export async function pesquisa(req, res, next) {
   try{

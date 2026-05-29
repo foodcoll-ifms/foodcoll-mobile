@@ -1,6 +1,6 @@
 import express from "express";
 import { pesquisa } from "../modules/pesquisa/pesquisaController.js";
-import { recomentacao, termoCompleto } from "../modules/termo/termoControler.js";
+import { recomentacao, termoCompleto } from "../modules/termo/termoController.js";
 import { favoritoArmazena, favoritoMostra } from "../modules/favorito/favoritoController.js";
 import { topBuscas } from "../modules/topBusca/topBuscaController.js";
 
