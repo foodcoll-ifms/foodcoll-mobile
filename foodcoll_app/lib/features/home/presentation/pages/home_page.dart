@@ -63,7 +63,7 @@ class _HomePageState extends State<HomePage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          'Seja bem-vindo(a), Aluno!',
+          'Seja bem-vindo(a), aluno(a)!',
           style: TextStyle(
             fontFamily: 'Poppins',
             fontSize: 24,
@@ -73,7 +73,7 @@ class _HomePageState extends State<HomePage> {
         ),
         const SizedBox(height: 8),
         const Text(
-          'Pesquise termos técnicos, ouça a pronúncia e salve seus favoritos.',
+          'Pesquise por colocações, observe contextos de uso, ouça a pronúncia e salve seus favoritos.',
           style: TextStyle(
             fontFamily: 'Inter',
             fontSize: 14,
@@ -89,7 +89,7 @@ class _HomePageState extends State<HomePage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          'Termos em Destaque (Trending)',
+          'Colocações em Destaque (Trending)',
           style: TextStyle(
             fontFamily: 'Poppins',
             fontSize: 18,

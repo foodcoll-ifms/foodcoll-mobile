@@ -31,7 +31,7 @@ class SearchInput extends StatelessWidget {
 
         decoration: InputDecoration(
           // Texto placeholder
-          hintText: 'Busque por collocations..',
+          hintText: 'Busque por colocações..',
 
           // Estilo do placeholder
           hintStyle: const TextStyle(

@@ -120,7 +120,7 @@ class CollocationsPage extends StatelessWidget {
     return ListTile(
       contentPadding: EdgeInsets.zero,
       title: const Text(
-        'Saber mais',
+        'Saiba mais',
         style: TextStyle(
           fontFamily: 'Inter',
           fontSize: 18,
