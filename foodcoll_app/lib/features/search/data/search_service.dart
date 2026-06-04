@@ -1,13 +1,9 @@
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import '../../../shared/models/collocation_model.dart';
 
 class SearchService {
-  static String get _baseUrl {
-    if (kIsWeb) return 'http://localhost:3000';
-    return 'http://10.0.2.2:3000';
-  }
+  static const _baseUrl = 'https://foodcoll-mobile-production.up.railway.app';
 
   Future<List<CollocationModel>> buscar(String query) async {
     final url = Uri.parse('$_baseUrl/search?q=${Uri.encodeComponent(query)}');
