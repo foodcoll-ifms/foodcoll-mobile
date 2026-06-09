@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'core/state/app_controller.dart';
 import 'core/state/historico_controller.dart';
 import 'features/collocations/presentation/pages/collocations_page.dart';
 import 'features/home/presentation/pages/home_page.dart';
@@ -10,6 +11,7 @@ import 'shared/models/collocation_model.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await HistoricoController.instance.carregar();
+  await AppController.instance.carregar();
   runApp(const MyApp());
 }
 
@@ -18,26 +20,44 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      initialRoute: '/home',
-      theme: ThemeData(),
-      routes: {
-        '/home': (_) => const HomePage(),
-        '/search': (_) => const SearchPage(),
-        '/favorites': (_) => const FavoritesPage(),
-        '/settings': (_) => const SettingsPage(),
-        '/collocations': (context) {
-          final args = ModalRoute.of(context)!.settings.arguments;
-          final collocation =
-              args is CollocationModel
-                  ? args
-                  : CollocationModel(
-                    colocacao: args?.toString() ?? '',
-                    traducao: '',
-                  );
-          return CollocationsPage(collocation: collocation);
-        },
+    return AnimatedBuilder(
+      animation: AppController.instance,
+      builder: (context, _) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          initialRoute: '/home',
+          theme: ThemeData(brightness: Brightness.light),
+          darkTheme: ThemeData(brightness: Brightness.dark),
+          themeMode:
+              AppController.instance.darkMode
+                  ? ThemeMode.dark
+                  : ThemeMode.light,
+          builder: (context, child) {
+            return MediaQuery(
+              data: MediaQuery.of(context).copyWith(
+                textScaler: TextScaler.linear(AppController.instance.fontSize),
+              ),
+              child: child!,
+            );
+          },
+          routes: {
+            '/home': (_) => const HomePage(),
+            '/search': (_) => const SearchPage(),
+            '/favorites': (_) => const FavoritesPage(),
+            '/settings': (_) => const SettingsPage(),
+            '/collocations': (context) {
+              final args = ModalRoute.of(context)!.settings.arguments;
+              final collocation =
+                  args is CollocationModel
+                      ? args
+                      : CollocationModel(
+                        colocacao: args?.toString() ?? '',
+                        traducao: '',
+                      );
+              return CollocationsPage(collocation: collocation);
+            },
+          },
+        );
       },
     );
   }
