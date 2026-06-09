@@ -2,133 +2,119 @@ import 'package:flutter/material.dart';
 import '../../../../core/base_page.dart';
 import '../../../../core/state/favorites_controller.dart';
 import '../../../../shared/models/collocation_model.dart';
-import '../../../../shared/widgets/page_header.dart';
-import '../widgets/example_card.dart';
+import '../../data/collocation_detail_service.dart';
+import '../widgets/collocation_header.dart';
+import '../widgets/examples_section.dart';
+import '../widgets/learn_more_section.dart';
 
-class CollocationsPage extends StatelessWidget {
+class CollocationsPage extends StatefulWidget {
   final CollocationModel collocation;
 
   const CollocationsPage({super.key, required this.collocation});
+
+  @override
+  State<CollocationsPage> createState() => _CollocationsPageState();
+}
+
+class _CollocationsPageState extends State<CollocationsPage> {
+  final _detailService = CollocationDetailService();
+  CollocationModel? _detalhes;
+  bool _isLoading = true;
+  String? _erro;
+
+  @override
+  void initState() {
+    super.initState();
+    _carregarDetalhes();
+  }
+
+  Future<void> _carregarDetalhes() async {
+    try {
+      final detalhes = await _detailService.buscarDetalhes(
+        widget.collocation.colocacao,
+      );
+      if (mounted) setState(() => _detalhes = detalhes);
+    } catch (e) {
+      if (mounted) setState(() => _erro = 'Erro ao carregar detalhes.');
+      debugPrint('Erro: $e');
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return BasePage(
       title: 'Colocações',
       showBottomNavigation: false,
-      body: AnimatedBuilder(
+      body: _buildBody(),
+    );
+  }
+
+  Widget _buildBody() {
+    if (_isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    if (_erro != null) {
+      return Center(
+        child: Text(_erro!, style: const TextStyle(color: Colors.red)),
+      );
+    }
+
+    final collocation = _detalhes ?? widget.collocation;
+
+    return SingleChildScrollView(
+      child: AnimatedBuilder(
         animation: FavoritesController.instance,
         builder: (context, _) {
-          final isFavorited = FavoritesController.instance.isFavorite(collocation.colocacao);
+          final isFavorited = FavoritesController.instance
+              .isFavorite(collocation.colocacao);
 
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildHeader(context, isFavorited),
+              CollocationHeader(
+                collocation: collocation,
+                isFavorited: isFavorited,
+                pageContext: context,
+              ),
               const SizedBox(height: 24),
-              _buildPronunciation(),
+              Text(
+                collocation.fonetica,
+                style: const TextStyle(
+                  fontFamily: 'Inter',
+                  fontSize: 16,
+                  color: Color(0xFF4A4F55),
+                ),
+              ),
               const SizedBox(height: 8),
-              _buildTranslation(),
+              Text(
+                collocation.traducao.isNotEmpty
+                    ? collocation.traducao
+                    : 'Tradução não disponível',
+                style: const TextStyle(
+                  fontFamily: 'Inter',
+                  fontSize: 16,
+                  color: Colors.black,
+                ),
+              ),
               const SizedBox(height: 32),
-              _buildExamples(),
+              ExamplesSection(
+                exemploEn: collocation.exemploEn,
+                exemploPt: collocation.exemploPt,
+              ),
               const SizedBox(height: 24),
-              _buildLearnMore(),
+              LearnMoreSection(
+                infClasse: collocation.infClasse,
+                infEstrutura: collocation.infEstrutura,
+                observacao: collocation.observacao,
+                fontes: collocation.fontes,
+              ),
             ],
           );
         },
       ),
-    );
-  }
-
-  Widget _buildHeader(BuildContext context, bool isFavorited) {
-    return Row(
-      children: [
-        Expanded(
-          child: PageHeader(
-            title: collocation.colocacao,
-            onBack: () => Navigator.pop(context),
-          ),
-        ),
-        IconButton(
-          onPressed: () => FavoritesController.instance.toggleFavorite(collocation),
-          icon: Icon(
-            isFavorited ? Icons.star : Icons.star_border,
-            color: const Color(0xFF1FA7A6),
-          ),
-        ),
-        IconButton(
-          onPressed: () => debugPrint('Ouvir pronúncia de ${collocation.colocacao}'),
-          icon: const Icon(Icons.volume_up, color: Color(0xFF1FA7A6)),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildPronunciation() {
-    return const Text(
-      "/'Pronúncia/",
-      style: TextStyle(
-        fontFamily: 'Inter',
-        fontSize: 16,
-        color: Color(0xFF4A4F55),
-      ),
-    );
-  }
-
-  Widget _buildTranslation() {
-    return Text(
-      collocation.traducao.isNotEmpty
-          ? collocation.traducao
-          : 'Tradução não disponível',
-      style: const TextStyle(
-        fontFamily: 'Inter',
-        fontSize: 16,
-        color: Colors.black,
-      ),
-    );
-  }
-
-  Widget _buildExamples() {
-    return const Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Exemplo(s) de uso',
-          style: TextStyle(
-            fontFamily: 'Inter',
-            fontSize: 18,
-            color: Color(0xFF4A4F55),
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        SizedBox(height: 12),
-        ExampleCard(
-          label: 'Inglês',
-          text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-          backgroundColor: Color(0xFFA8D5D4),
-        ),
-        SizedBox(height: 16),
-        ExampleCard(
-          label: 'Português',
-          text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-          backgroundColor: Color(0xFFE9EEF0),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildLearnMore() {
-    return ListTile(
-      contentPadding: EdgeInsets.zero,
-      title: const Text(
-        'Saiba mais',
-        style: TextStyle(
-          fontFamily: 'Inter',
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-      trailing: const Icon(Icons.keyboard_arrow_down_sharp, color: Colors.black),
-      onTap: () => debugPrint('Expandir informações adicionais'),
     );
   }
 }
