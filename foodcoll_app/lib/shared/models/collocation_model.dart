@@ -8,7 +8,7 @@ class CollocationModel {
   final String infEstrutura;
   final String observacao;
   final List<String> remissivas;
-  final List<Map<String, dynamic>> fontes;
+  final List<String> fontes;
 
   CollocationModel({
     required this.colocacao,
@@ -41,7 +41,7 @@ class CollocationModel {
       infEstrutura: infGramatical['estrutura']?.toString() ?? '',
       observacao: json['observacao']?.toString() ?? '',
       remissivas: List<String>.from(json['remissivas'] ?? []),
-      fontes: List<Map<String, dynamic>>.from(json['fontes'] ?? []),
+      fontes: List<String>.from(json['fontes'] ?? []),
     );
   }
 }

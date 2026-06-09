@@ -5,7 +5,7 @@ class LearnMoreSection extends StatefulWidget {
   final String infClasse;
   final String infEstrutura;
   final String observacao;
-  final List<Map<String, dynamic>> fontes;
+  final List<String> fontes;
 
   const LearnMoreSection({
     super.key,

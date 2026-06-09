@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class SourceCard extends StatelessWidget {
-  final Map<String, dynamic> fonte;
+  final String fonte;
 
   const SourceCard({super.key, required this.fonte});
 
@@ -22,25 +22,28 @@ class SourceCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  fonte['titulo'] ?? '',
-                  style: const TextStyle(
+                const Text(
+                  'Título da referência',
+                  style: TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                if (fonte['autor'] != null)
-                  Text(
-                    fonte['autor'],
-                    style: const TextStyle(
-                      fontFamily: 'Inter',
-                      fontSize: 12,
-                      color: Color(0xFF4A4F55),
-                    ),
+                const Text(
+                  'Autor/Organização',
+                  style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 12,
+                    color: Color(0xFF4A4F55),
                   ),
+                ),
               ],
             ),
+          ),
+          IconButton(
+            onPressed: () => debugPrint('Abrir link: $fonte'),
+            icon: const Icon(Icons.link, color: Color(0xFF1FA7A6)),
           ),
         ],
       ),
