@@ -32,7 +32,10 @@ class MyApp extends StatelessWidget {
           final collocation =
               args is CollocationModel
                   ? args
-                  : CollocationModel(colocacao: args as String, traducao: '');
+                  : CollocationModel(
+                    colocacao: args?.toString() ?? '',
+                    traducao: '',
+                  );
           return CollocationsPage(collocation: collocation);
         },
       },
