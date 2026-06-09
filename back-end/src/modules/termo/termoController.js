@@ -13,7 +13,7 @@ export async function termoCompleto(req, res, next) {
   }
 }
 
-export async function recomentacao(req, res, next) {
+export async function recomendacao(req, res, next) {
   const termo = req.params.termo;
 
   try {
