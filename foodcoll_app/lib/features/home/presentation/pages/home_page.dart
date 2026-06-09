@@ -58,7 +58,9 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  Widget _buildSaudacao() {
+  Widget _buildSaudacao(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -72,12 +74,12 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         const SizedBox(height: 8),
-        const Text(
+        Text(
           'Pesquise por colocações, observe contextos de uso, ouça a pronúncia e salve seus favoritos.',
           style: TextStyle(
             fontFamily: 'Inter',
             fontSize: 14,
-            color: Color(0xFF4A4F55),
+            color: isDark ? const Color(0xFFE9EEF0) : const Color(0xFF4A4F55),
           ),
         ),
       ],
@@ -124,7 +126,7 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildSaudacao(),
+                _buildSaudacao(context),
                 const SizedBox(height: 24),
                 _buildTrending(),
                 const SizedBox(height: 24),

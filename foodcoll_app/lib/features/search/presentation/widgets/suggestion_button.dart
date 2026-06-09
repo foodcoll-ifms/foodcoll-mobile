@@ -26,6 +26,8 @@ class SuggestionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 4),
       child: SizedBox(
@@ -34,8 +36,12 @@ class SuggestionButton extends StatelessWidget {
         child: ElevatedButton(
           onPressed: () => _showDialog(context),
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFFE9EEF0),
-            foregroundColor: const Color(0xFF4A4F55),
+            backgroundColor: isDark
+                ? const Color(0xFF1F2429)
+                : const Color(0xFFE9EEF0),
+            foregroundColor: isDark
+                ? const Color(0xFF7A848C)
+                : const Color(0xFF4A4F55),
             elevation: 0,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),

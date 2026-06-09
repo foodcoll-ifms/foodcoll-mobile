@@ -38,15 +38,17 @@ class _LearnMoreSectionState extends State<LearnMoreSection> {
             ),
           ),
           trailing: Icon(
-            _expanded ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down_sharp,
-            color: Colors.black,
+            _expanded
+                ? Icons.keyboard_arrow_up
+                : Icons.keyboard_arrow_down_sharp,
+            color:
+                Theme.of(context).brightness == Brightness.dark
+                    ? const Color(0xFFE9EEF0)
+                    : Colors.black,
           ),
           onTap: () => setState(() => _expanded = !_expanded),
         ),
-        if (_expanded) ...[
-          const SizedBox(height: 8),
-          _buildContent(),
-        ],
+        if (_expanded) ...[const SizedBox(height: 8), _buildContent()],
       ],
     );
   }
@@ -84,13 +86,12 @@ class _LearnMoreSectionState extends State<LearnMoreSection> {
   }
 
   Widget _buildInfoRow(String label, String value) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final textColor = isDark ? const Color(0xFF7A848C) : Colors.black;
+
     return RichText(
       text: TextSpan(
-        style: const TextStyle(
-          fontFamily: 'Inter',
-          fontSize: 15,
-          color: Colors.black,
-        ),
+        style: TextStyle(fontFamily: 'Inter', fontSize: 15, color: textColor),
         children: [
           TextSpan(
             text: '$label: ',

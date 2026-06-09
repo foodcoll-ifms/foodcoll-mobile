@@ -4,12 +4,16 @@ class ExampleCard extends StatelessWidget {
   final String label;
   final String text;
   final Color backgroundColor;
+  final bool isDark;
+  final Color? textColor;
 
   const ExampleCard({
     super.key,
     required this.label,
     required this.text,
     required this.backgroundColor,
+    this.isDark = false,
+    this.textColor,
   });
 
   @override
@@ -19,10 +23,10 @@ class ExampleCard extends StatelessWidget {
       children: [
         Text(
           label,
-          style: const TextStyle(
+          style: TextStyle(
             fontFamily: 'Inter',
             fontSize: 14,
-            color: Color(0xFF4A4F55),
+            color: isDark ? const Color(0xFF7A848C) : const Color(0xFF4A4F55),
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -36,10 +40,12 @@ class ExampleCard extends StatelessWidget {
           ),
           child: Text(
             text,
-            style: const TextStyle(
+            style: TextStyle(
               fontFamily: 'Inter',
               fontSize: 16,
-              color: Color(0xFF4A4F55),
+              color:
+                  textColor ??
+                  (isDark ? const Color(0xFF7A848C) : const Color(0xFF4A4F55)),
             ),
           ),
         ),

@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// Estrutura base reutilizável das telas do app.
-
-/// Define o conteúdo da página e a navegação inferior padrão.
 class BasePage extends StatefulWidget {
   final Widget body;
   final String title;
@@ -26,7 +23,6 @@ class BasePage extends StatefulWidget {
 class _BasePageState extends State<BasePage> {
   late int _selectedIndex;
 
-  // Cores e tamanhos usados na barra de navegação inferior
   final Color iconColor = const Color(0xFFA8D5D4);
   final Color iconHoverColor = const Color(0xFF1FA7A6);
   final double iconSize = 24;
@@ -35,13 +31,11 @@ class _BasePageState extends State<BasePage> {
   @override
   void initState() {
     super.initState();
-    _selectedIndex =
-        widget.currentIndex; // Define qual item da navegação começa selecionado
+    _selectedIndex = widget.currentIndex;
   }
 
-  /// Atualiza o item selecionado e executa a navegação.
   void _onItemTapped(int index) {
-    if (_selectedIndex == index) return; // evita recarregar a mesma tela
+    if (_selectedIndex == index) return;
 
     setState(() {
       _selectedIndex = index;
@@ -63,7 +57,6 @@ class _BasePageState extends State<BasePage> {
     }
   }
 
-  /// Cria um item da barra de navegação inferior.
   BottomNavigationBarItem _buildNavItem(IconData icon, String label) {
     return BottomNavigationBarItem(
       icon: Icon(icon, size: iconSize, color: iconColor),
@@ -74,10 +67,11 @@ class _BasePageState extends State<BasePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
+    final theme = Theme.of(context);
+    final backgroundColor = theme.scaffoldBackgroundColor;
 
-      // Área principal da tela com espaçamento padrão do app
+    return Scaffold(
+      backgroundColor: backgroundColor,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(
@@ -89,35 +83,33 @@ class _BasePageState extends State<BasePage> {
           child: widget.body,
         ),
       ),
-
-      // Barra de navegação inferior padrão
       bottomNavigationBar: widget.showBottomNavigation
-    ? BottomNavigationBar(
-        backgroundColor: Colors.white,
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        showSelectedLabels: true,
-        showUnselectedLabels: true,
-        selectedLabelStyle: TextStyle(
-          fontSize: labelFontSize,
-          fontFamily: 'Inter',
-          color: iconHoverColor,
-        ),
-        unselectedLabelStyle: TextStyle(
-          fontSize: labelFontSize,
-          fontFamily: 'Inter',
-          color: iconColor,
-        ),
-        type: BottomNavigationBarType.fixed,
-        iconSize: iconSize,
-        items: [
-          _buildNavItem(Icons.home, 'Home'),
-          _buildNavItem(Icons.search, 'Buscar'),
-          _buildNavItem(Icons.star, 'Favoritos'),
-          _buildNavItem(Icons.settings, 'Configurações'),
-        ],
-      )
-    : null,
+          ? BottomNavigationBar(
+              backgroundColor: backgroundColor,
+              currentIndex: _selectedIndex,
+              onTap: _onItemTapped,
+              showSelectedLabels: true,
+              showUnselectedLabels: true,
+              selectedLabelStyle: TextStyle(
+                fontSize: labelFontSize,
+                fontFamily: 'Inter',
+                color: iconHoverColor,
+              ),
+              unselectedLabelStyle: TextStyle(
+                fontSize: labelFontSize,
+                fontFamily: 'Inter',
+                color: iconColor,
+              ),
+              type: BottomNavigationBarType.fixed,
+              iconSize: iconSize,
+              items: [
+                _buildNavItem(Icons.home, 'Home'),
+                _buildNavItem(Icons.search, 'Buscar'),
+                _buildNavItem(Icons.star, 'Favoritos'),
+                _buildNavItem(Icons.settings, 'Configurações'),
+              ],
+            )
+          : null,
     );
   }
 }

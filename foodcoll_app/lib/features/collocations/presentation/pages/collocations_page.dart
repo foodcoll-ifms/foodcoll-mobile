@@ -68,8 +68,10 @@ class _CollocationsPageState extends State<CollocationsPage> {
       child: AnimatedBuilder(
         animation: FavoritesController.instance,
         builder: (context, _) {
-          final isFavorited = FavoritesController.instance
-              .isFavorite(collocation.colocacao);
+          final isFavorited = FavoritesController.instance.isFavorite(
+            collocation.colocacao,
+          );
+          final isDark = Theme.of(context).brightness == Brightness.dark;
 
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,10 +84,13 @@ class _CollocationsPageState extends State<CollocationsPage> {
               const SizedBox(height: 24),
               Text(
                 collocation.fonetica,
-                style: const TextStyle(
+                style: TextStyle(
                   fontFamily: 'Inter',
                   fontSize: 16,
-                  color: Color(0xFF4A4F55),
+                  color:
+                      isDark
+                          ? const Color(0xFF7A848C)
+                          : const Color(0xFF4A4F55),
                 ),
               ),
               const SizedBox(height: 8),
@@ -93,10 +98,10 @@ class _CollocationsPageState extends State<CollocationsPage> {
                 collocation.traducao.isNotEmpty
                     ? collocation.traducao
                     : 'Tradução não disponível',
-                style: const TextStyle(
+                style: TextStyle(
                   fontFamily: 'Inter',
                   fontSize: 16,
-                  color: Colors.black,
+                  color: isDark ? const Color(0xFF7A848C) : Colors.black,
                 ),
               ),
               const SizedBox(height: 32),

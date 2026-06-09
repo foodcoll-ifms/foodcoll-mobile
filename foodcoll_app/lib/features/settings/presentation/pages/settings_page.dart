@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:foodcoll_app/shared/widgets/page_header.dart';
 import '../../../../core/base_page.dart';
+import '../../../../core/state/app_controller.dart';
+import '../../../../shared/widgets/page_header.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -10,57 +11,69 @@ class SettingsPage extends StatelessWidget {
     return BasePage(
       title: 'Configurações',
       currentIndex: 3,
-      body: Column(
-        spacing: 30,
-        children: [
-          PageHeader(title: "Configurações", onBack: () => true),
-          ListView(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
+      body: AnimatedBuilder(
+        animation: AppController.instance,
+        builder: (context, _) {
+          return Column(
+            spacing: 30,
             children: [
-              SwitchListTile(
-                secondary: Icon(Icons.dark_mode, color: Color(0xFF1FA7A6)),
-                minLeadingWidth: 60,
-                title: Text("Modo Escuro"),
-                value: false,
-                onChanged: (bool value) => {},
-                inactiveTrackColor: Color(0xFFA8D5D4),
-                inactiveThumbColor: Color(0xFFFFFFFF),
-                activeThumbColor: Color(0xFFFFFFFF),
-                activeTrackColor: Color(0xFFA8D5D4),
-                trackOutlineColor: WidgetStateProperty.all(Colors.transparent),
-              ),
-              Divider(color: Color(0xFFA8D5D4), thickness: 2),
-              ListTile(
-                leading: Icon(Icons.format_size, color: Color(0xFF1FA7A6)),
-                minLeadingWidth: 60,
-                title: Text("Tamanho da fonte"),
-                trailing: DropdownButton<String>(
-                  icon: Icon(
-                    Icons.keyboard_arrow_down_sharp,
-                    color: Color(0xFFA8D5D4),
+              PageHeader(title: "Configurações", onBack: () => true),
+              ListView(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                children: [
+                  SwitchListTile(
+                    secondary: const Icon(Icons.dark_mode, color: Color(0xFF1FA7A6)),
+                    minLeadingWidth: 60,
+                    title: const Text("Modo Escuro"),
+                    value: AppController.instance.darkMode,
+                    onChanged: (_) => AppController.instance.toggleDarkMode(),
+                    inactiveTrackColor: const Color(0xFFA8D5D4),
+                    inactiveThumbColor: const Color(0xFFFFFFFF),
+                    activeThumbColor: const Color(0xFFFFFFFF),
+                    activeTrackColor: const Color(0xFFA8D5D4),
+                    trackOutlineColor: WidgetStateProperty.all(Colors.transparent),
                   ),
-                  hint: Text("p", style: TextStyle(color: Color(0xFFA8D5D4))),
-                  underline: SizedBox(),
-                  items: [],
-                  onChanged: (value) {},
-                ),
-              ),
-              Divider(color: Color(0xFFA8D5D4), thickness: 2),
-              ListTile(
-                leading: Icon(Icons.info, color: Color(0xFF1FA7A6)),
-                minLeadingWidth: 60,
-                title: Text("Sobre o App"),
-              ),
-              Divider(color: Color(0xFFA8D5D4), thickness: 2),
-              ListTile(
-                leading: Icon(Icons.logout, color: Color(0xFF1FA7A6)),
-                minLeadingWidth: 60,
-                title: Text("Sair"),
+                  const Divider(color: Color(0xFFA8D5D4), thickness: 2),
+                  ListTile(
+                    leading: const Icon(Icons.format_size, color: Color(0xFF1FA7A6)),
+                    minLeadingWidth: 60,
+                    title: const Text("Tamanho da fonte"),
+                    trailing: DropdownButton<double>(
+                      icon: const Icon(
+                        Icons.keyboard_arrow_down_sharp,
+                        color: Color(0xFFA8D5D4),
+                      ),
+                      value: AppController.instance.fontSize,
+                      underline: const SizedBox(),
+                      items: const [
+                        DropdownMenuItem(value: 1.0, child: Text("P")),
+                        DropdownMenuItem(value: 1.15, child: Text("M")),
+                        DropdownMenuItem(value: 1.3, child: Text("G")),
+                      ],
+                      onChanged: (value) {
+                        if (value != null) AppController.instance.setFontSize(value);
+                      },
+                    ),
+                  ),
+                  const Divider(color: Color(0xFFA8D5D4), thickness: 2),
+                  ListTile(
+                    leading: const Icon(Icons.info, color: Color(0xFF1FA7A6)),
+                    minLeadingWidth: 60,
+                    title: const Text("Sobre o App"),
+                    onTap: () => showAboutDialog(
+                      context: context,
+                      applicationName: 'FoodColl',
+                      applicationVersion: '1.0.0',
+                      applicationLegalese: 'Projeto de Iniciação Científica',
+                    ),
+                  ),
+                  const Divider(color: Color(0xFFA8D5D4), thickness: 2),
+                ],
               ),
             ],
-          ),
-        ],
+          );
+        },
       ),
     );
   }

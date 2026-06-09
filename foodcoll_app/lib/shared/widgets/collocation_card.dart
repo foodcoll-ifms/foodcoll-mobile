@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 
-/// Widget reutilizável para exibir uma collocation com tradução e opção de favoritar.
-
-/// Utilizado nas telas de busca, favoritos e glossário.
 class CollocationCard extends StatelessWidget {
   String _capitalize(String text) {
     if (text.isEmpty) return text;
     return text[0].toUpperCase() + text.substring(1);
   }
-  
+
   final String collocation;
   final String translation;
   final bool isFavorited;
@@ -24,52 +21,41 @@ class CollocationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Column(
       children: [
         Padding(
-          // Espaçamento interno vertical entre os itens
           padding: const EdgeInsets.symmetric(vertical: 12.0),
           child: Row(
-            // Centraliza verticalmente a estrela em relação ao texto
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Área de texto (collocation + tradução)
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Nome da collocation
                     Text(
                       _capitalize(collocation),
-                      style: const TextStyle(
+                      style: textTheme.bodyLarge?.copyWith(
                         fontFamily: 'Inter',
-                        fontSize: 16,
                         fontWeight: FontWeight.w600,
-                        color: Colors.black,
                       ),
                     ),
-
-                    // Espaço entre collocation e tradução
                     const SizedBox(height: 16),
-
-                    // Tradução da collocation
                     Text(
                       _capitalize(translation),
-                      style: const TextStyle(
+                      style: textTheme.bodyMedium?.copyWith(
                         fontFamily: 'Inter',
-                        fontSize: 14,
-                        color: Color(0xFF4A4F55),
+                        color: colorScheme.onSurface.withOpacity(0.6),
                       ),
                     ),
                   ],
                 ),
               ),
-
-              // Ícone de favorito (estrela)
               GestureDetector(
                 onTap: onFavoriteToggle,
                 child: Icon(
-                  // Ícone preenchido ou contornado conforme estado
                   isFavorited ? Icons.star : Icons.star_border,
                   color: const Color(0xFF1FA7A6),
                   size: 32,
@@ -78,8 +64,6 @@ class CollocationCard extends StatelessWidget {
             ],
           ),
         ),
-
-        // Linha divisória entre os itens
         const Divider(
           height: 2,
           thickness: 2,
