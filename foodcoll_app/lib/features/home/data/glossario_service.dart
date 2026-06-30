@@ -1,12 +1,11 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../../../shared/models/collocation_model.dart';
+import '../../../shared/config/api_config.dart';
 
 class GlossarioService {
-  static const _baseUrl = 'https://foodcoll-mobile-production.up.railway.app';
-
   Future<List<CollocationModel>> listarTodas() async {
-    final url = Uri.parse('$_baseUrl/glossario');
+    final url = Uri.parse('${ApiConfig.baseUrl}/glossario');
     final response = await http.get(url);
 
     if (response.statusCode != 200) {
