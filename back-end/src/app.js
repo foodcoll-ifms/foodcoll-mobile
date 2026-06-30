@@ -9,6 +9,7 @@ const app = express();
 //app.use
 app.use(cors());
 app.use(express.json());
+app.get('/health', (req, res) => res.status(200).send('ok'));
 app.use(router);
 app.use(errosNaExecucao);
 
