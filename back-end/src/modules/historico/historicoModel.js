@@ -1,10 +1,12 @@
-import { collHistorico, conecta, fecha } from "../../config/db.js";
-import { ObjectId } from "mongodb";
+import { collHistorico, USER_ID } from "../../config/db.js";
 
+// função de armazenar um dado buscado na tabela historico, usando de parametro doc
 export async function insererirHistoricoDB(doc) {
+  // updateOne com os campos que serão ingrementados no $push
+  // ele usa como paramtro o id do usuario
   await collHistorico.updateOne(
     {
-      usuarioId: new ObjectId("69edfa784d1ef2c789095364"),
+      usuarioId: USER_ID,
     },
     {
       $push: {
@@ -15,12 +17,16 @@ export async function insererirHistoricoDB(doc) {
       },
     },
   );
-  console.log("armazena");
+  console.log("foi armazenado um novo registro no historico do usuario ");
 }
 
-export async function mostrarHistorico(ID) {
+// função de mostrar o historico do usuario
+export async function mostrarHistorico() {
+  console.log("no inicio da funcao do model de historio onde mostra o historico");
+  // constante que armazena o resultado da consulta no Historico do ususario
+  // armazena tudo que é encontrada com o parametro do id do usuraio
   const resultado = await collHistorico
-    .find({ usuarioId: ID })
+    .find({ usuarioId: USER_ID })
     .project({ _id: 0, usuarioId: 0 })
     .toArray();
   return resultado;
