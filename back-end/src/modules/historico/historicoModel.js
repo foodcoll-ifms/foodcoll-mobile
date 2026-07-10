@@ -1,7 +1,7 @@
 import { collHistorico, USER_ID } from "../../config/db.js";
 
 // função de armazenar um dado buscado na tabela historico, usando de parametro doc
-export async function insererirHistoricoDB(doc) {
+export async function inserirHistoricoDB(doc) {
   // updateOne com os campos que serão ingrementados no $push
   // ele usa como paramtro o id do usuario
   await collHistorico.updateOne(
