@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../shared/widgets/app_dialog.dart';
+import '../../../../core/utils/feedback_sonoro.dart';
 
 class SuggestionButton extends StatelessWidget {
   const SuggestionButton({super.key});
@@ -10,7 +11,7 @@ class SuggestionButton extends StatelessWidget {
       context: context,
       builder: (dialogContext) => AppDialog(
         title: 'Enviar sugestão',
-        hintText: 'Digite uma collocation',
+        hintText: 'Digite uma colocação',
         controller: controller,
         confirmText: 'Enviar',
         cancelText: 'Cancelar',
@@ -18,6 +19,9 @@ class SuggestionButton extends StatelessWidget {
           final suggestion = controller.text.trim();
           if (suggestion.isEmpty) return;
           debugPrint('Sugestão enviada: "$suggestion"');
+          // TODO: quando o POST real for implementado, mover a linha
+          // abaixo para dentro do retorno de sucesso da chamada HTTP.
+          tocarFeedbackConfirmacao();
           Navigator.of(dialogContext).pop();
         },
       ),

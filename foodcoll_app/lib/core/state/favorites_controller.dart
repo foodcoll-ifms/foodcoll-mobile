@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../shared/models/collocation_model.dart';
+import '../utils/feedback_sonoro.dart';
 
 class FavoritesController extends ChangeNotifier {
   FavoritesController._();
@@ -20,6 +21,7 @@ class FavoritesController extends ChangeNotifier {
     } else {
       _favorites[collocation.colocacao] = collocation;
     }
+    tocarFeedbackConfirmacao();
     notifyListeners();
   }
 
