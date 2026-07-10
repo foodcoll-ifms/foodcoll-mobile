@@ -11,19 +11,7 @@ const client = new MongoClient(uri);
 //função de ligacão da conecção com o mongodb
 export async function conecta() {
   await client.connect();
-  console.log(`
-    conecto
-    `);
-
-}
-
-//função de desligar a conecção com o mongodb
-//assim fica mais rapido
-export async function fecha() {
-  await client.close();
-  console.log(`
-    fecha
-    `);
+  console.log(`conecto`);
 
 }
 
@@ -33,3 +21,5 @@ export const collColocacoes = client.db(process.env.DB_1).collection(process.env
 export const collFavorito = client.db(process.env.DB_1).collection(process.env.COLL_3);
 export const collHistorico = client.db(process.env.DB_1).collection(process.env.COLL_4);
 export const collTopBusca = client.db(process.env.DB_1).collection(process.env.COLL_5);
+export const collFeedBack = client.db(process.env.DB_1).collection(process.env.COLL_6);
+export const USER_ID = new ObjectId("69edfa784d1ef2c789095364");
