@@ -1,20 +1,16 @@
-import { inserirFavorito, deleteFavorito, mostarFavorito } from "./favoritoModel.js";
+import { inserirEdeletarFavorito, mostarFavorito } from "./favoritoModel.js";
 
-export async function validaFavorito(usuarioId, colocacoesChave) {
-  console.log("favorito service");
+// funçãoo de validação do favorito, usando de parametros o id do usuario e a colocação
+export async function validaFavorito(usuarioId, colocacaoChave) {
+  console.log("no inicio da função validaFavorito");
 
-  const resultado = await deleteFavorito(usuarioId, colocacoesChave);
+  // constante que armazena o array retornado da função deleteFavortio
+  const resultado = await inserirEdeletarFavorito(usuarioId, colocacaoChave);
   console.log(resultado);
 
-  if (resultado.modifiedCount === 0) {
-    await inserirFavorito(usuarioId, colocacoesChave);
-    return false;
-  }
-
-  return true;
-}
-
-export async function listarfavoritos(usuarioId) {
-  const resultado = await mostarFavorito(usuarioId);
-  return resultado
+  // return com tipo bolleano
+  // caso haja mudançao retornara true
+  // caso não haja, insere no banco de dados retornara false
+  const t = resultado.colocacoesChave.includes(colocacaoChave);
+  return t;
 }
