@@ -12,13 +12,13 @@ export async function verificaSugestao(query, tipo) {
   const existe = await detalheTermo(query);
   /* verifica se a dados no constante existe, pois se houver,
   significa que o query do usuario já existe, logo não pode ser armazenado */
-  if (existe != null || existe != []) {
+  if (existe != null) {
     // executa o armazenamento da sugestão do usuario, junto ao seu tipo de feedback
     await feedBackBD(query, tipo);
     // return com tipo booleano
-    return false;
+    return true;
   }
   // caso haja dados na constante existe, não sera armazenada
   // return com tipo booleano
-  return true;
+  return false;
 }

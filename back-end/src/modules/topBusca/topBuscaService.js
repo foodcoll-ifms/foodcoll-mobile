@@ -6,13 +6,13 @@ export async function verificaTop(query, resposta) {
   // if para ver se o query é pequeno ou nulo
   if (!query || query.length <= 2) {
     return 0
-  };
+  }
   console.log("no inico da função verificaTop");
   // if para saber se o query está na resposta ou não
-  if (resposta[0].colocacao.includes(query) && query.includes(resposta[0].colocacao)) {
+  if (resposta[0].colocacao.includes(query)) {
     // armazeno a busca no top buscas
     armazenaTopBuscas(query);
     return 1;
-  };
+  }
   return 0;
 }
