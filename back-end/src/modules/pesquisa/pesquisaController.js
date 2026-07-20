@@ -1,6 +1,7 @@
 //importação
-import { guardaHistorico, validaPesquisa } from "./pesquisaService.js";
-import { vericivaTop } from "../topBusca/topBuscaService.js";
+import { validaPesquisa } from "./pesquisaService.js";
+import { guardaHistorico } from "../historico/historicoService.js"
+import { verificaTop } from "../topBusca/topBuscaService.js";
 
 export async function pesquisa(req, res, next) {
   try{
@@ -14,7 +15,7 @@ export async function pesquisa(req, res, next) {
 
     Promise.all([
       guardaHistorico(query),
-      vericivaTop(query, resultados)
+      verificaTop(query, resultados)
     ]).catch(err => "erro em guardar o historico")
   }catch(err){
     //em caso de erro no meio da execução manda um next com erro
