@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'source_card.dart';
+import '../../../../shared/models/collocation_model.dart'; // pro FonteModel — ajusta o caminho
 
 class LearnMoreSection extends StatefulWidget {
   final String infClasse;
   final String infEstrutura;
   final String observacao;
-  final List<String> fontes;
+  final List<FonteModel> fontes; // trocado de List<String>
 
   const LearnMoreSection({
     super.key,

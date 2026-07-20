@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import '../../../../shared/models/collocation_model.dart';
 
 class SourceCard extends StatelessWidget {
-  final String fonte;
+  final FonteModel fonte;
 
   const SourceCard({super.key, required this.fonte});
 
@@ -21,34 +22,20 @@ class SourceCard extends StatelessWidget {
           const Icon(Icons.description_outlined, color: Color(0xFF1FA7A6)),
           const SizedBox(width: 12),
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Título da referência',
-                  style: TextStyle(
-                    fontFamily: 'Inter',
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: isDark ? const Color(0xFFE9EEF0) : Colors.black,
-                  ),
-                ),
-                Text(
-                  'Autor/Organização',
-                  style: TextStyle(
-                    fontFamily: 'Inter',
-                    fontSize: 12,
-                    color:
-                        isDark
-                            ? const Color(0xFF7A848C)
-                            : const Color(0xFF4A4F55),
-                  ),
-                ),
-              ],
+            child: Text(
+              fonte.url.isNotEmpty ? fonte.url : 'Fonte sem link disponível',
+              style: TextStyle(
+                fontFamily: 'Inter',
+                fontSize: 14,
+                color: isDark ? const Color(0xFFE9EEF0) : Colors.black,
+              ),
+              overflow: TextOverflow.ellipsis,
             ),
           ),
           IconButton(
-            onPressed: () => debugPrint('Abrir link: $fonte'),
+            onPressed: fonte.url.isNotEmpty
+                ? () => debugPrint('Abrir link: ${fonte.url}')
+                : null,
             icon: const Icon(Icons.link, color: Color(0xFF1FA7A6)),
           ),
         ],

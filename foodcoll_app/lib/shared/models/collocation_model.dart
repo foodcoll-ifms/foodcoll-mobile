@@ -1,3 +1,15 @@
+class FonteModel {
+  final String url;
+
+  FonteModel({this.url = ''});
+
+  factory FonteModel.fromJson(Map<String, dynamic> json) {
+    return FonteModel(
+      url: json['url']?.toString() ?? '',
+    );
+  }
+}
+
 class CollocationModel {
   final String colocacao;
   final String traducao;
@@ -8,7 +20,7 @@ class CollocationModel {
   final String infEstrutura;
   final String observacao;
   final List<String> remissivas;
-  final List<String> fontes;
+  final List<FonteModel> fontes;
 
   CollocationModel({
     required this.colocacao,
@@ -27,6 +39,7 @@ class CollocationModel {
     final exemplos = json['exemplos_uso'] as List? ?? [];
     final infGramatical =
         json['informacoes_gramaticais'] as Map<String, dynamic>? ?? {};
+    final fontesJson = json['fontes'] as List? ?? [];
 
     final exemploEn = exemplos.isNotEmpty ? (exemplos[0]['en'] ?? '') : '';
     final exemploPt = exemplos.isNotEmpty ? (exemplos[0]['pt'] ?? '') : '';
@@ -41,7 +54,9 @@ class CollocationModel {
       infEstrutura: infGramatical['estrutura']?.toString() ?? '',
       observacao: json['observacao']?.toString() ?? '',
       remissivas: List<String>.from(json['remissivas'] ?? []),
-      fontes: List<String>.from(json['fontes'] ?? []),
+      fontes: fontesJson
+          .map((f) => FonteModel.fromJson(f as Map<String, dynamic>))
+          .toList(),
     );
   }
 }
