@@ -6,6 +6,9 @@ import 'features/home/presentation/pages/home_page.dart';
 import 'features/search/presentation/pages/search_page.dart';
 import 'features/favorites/presentation/pages/favorites_page.dart';
 import 'features/settings/presentation/pages/settings_page.dart';
+import 'features/splash/presentation/pages/splash_page.dart';
+import 'features/onboarding/presentation/pages/onboarding_page.dart';
+import 'features/auth/presentation/pages/access_page.dart';
 import 'shared/models/collocation_model.dart';
 
 void main() async {
@@ -25,7 +28,7 @@ class MyApp extends StatelessWidget {
       builder: (context, _) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          initialRoute: '/home',
+          initialRoute: '/splash',
           theme: ThemeData(brightness: Brightness.light),
           darkTheme: ThemeData(brightness: Brightness.dark),
           themeMode:
@@ -41,6 +44,9 @@ class MyApp extends StatelessWidget {
             );
           },
           routes: {
+            '/splash': (_) => const SplashPage(),
+            '/onboarding': (_) => const OnboardingPage(),
+            '/entrada': (_) => const AccessPage(),
             '/home': (_) => const HomePage(),
             '/search': (_) => const SearchPage(),
             '/favorites': (_) => const FavoritesPage(),
