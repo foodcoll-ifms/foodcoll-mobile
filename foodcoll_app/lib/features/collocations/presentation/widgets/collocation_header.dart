@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/state/favorites_controller.dart';
 import '../../../../shared/models/collocation_model.dart';
 import '../../../../shared/widgets/page_header.dart';
+import '../../../../core/utils/pronuncia_player.dart';
 
 class CollocationHeader extends StatelessWidget {
   final CollocationModel collocation;
@@ -26,16 +27,15 @@ class CollocationHeader extends StatelessWidget {
           ),
         ),
         IconButton(
-          onPressed: () =>
-              FavoritesController.instance.toggleFavorite(collocation),
+          onPressed:
+              () => FavoritesController.instance.toggleFavorite(collocation),
           icon: Icon(
             isFavorited ? Icons.star : Icons.star_border,
             color: const Color(0xFF1FA7A6),
           ),
         ),
         IconButton(
-          onPressed: () =>
-              debugPrint('Ouvir pronúncia de ${collocation.colocacao}'),
+          onPressed: () => tocarPronuncia(collocation.colocacao),
           icon: const Icon(Icons.volume_up, color: Color(0xFF1FA7A6)),
         ),
       ],

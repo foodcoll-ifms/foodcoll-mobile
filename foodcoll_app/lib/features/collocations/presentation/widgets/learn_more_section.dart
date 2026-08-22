@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'source_card.dart';
-import '../../../../shared/models/collocation_model.dart'; // pro FonteModel — ajusta o caminho
+import '../../../../shared/models/collocation_model.dart';
+import '../../../../core/utils/slug.dart';
 
 class LearnMoreSection extends StatefulWidget {
+  final String termo;
   final String infClasse;
   final String infEstrutura;
   final String observacao;
-  final List<FonteModel> fontes; // trocado de List<String>
+  final List<FonteModel> fontes;
 
   const LearnMoreSection({
     super.key,
+    required this.termo,
     required this.infClasse,
     required this.infEstrutura,
     required this.observacao,
@@ -58,6 +61,7 @@ class _LearnMoreSectionState extends State<LearnMoreSection> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        _buildImagem(),
         if (widget.infClasse.isNotEmpty) ...[
           _buildInfoRow('Classe', widget.infClasse),
           const SizedBox(height: 8),
@@ -83,6 +87,21 @@ class _LearnMoreSectionState extends State<LearnMoreSection> {
           ...widget.fontes.map((fonte) => SourceCard(fonte: fonte)),
         ],
       ],
+    );
+  }
+
+  Widget _buildImagem() {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(12),
+        child: Image.asset(
+          imageAssetPath(widget.termo),
+          width: double.infinity,
+          fit: BoxFit.fitWidth,
+          errorBuilder: (context, error, stackTrace) => const SizedBox.shrink(),
+        ),
+      ),
     );
   }
 

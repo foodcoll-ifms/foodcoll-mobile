@@ -111,6 +111,7 @@ class _CollocationsPageState extends State<CollocationsPage> {
               ),
               const SizedBox(height: 24),
               LearnMoreSection(
+                termo: collocation.colocacao,
                 infClasse: collocation.infClasse,
                 infEstrutura: collocation.infEstrutura,
                 observacao: collocation.observacao,
