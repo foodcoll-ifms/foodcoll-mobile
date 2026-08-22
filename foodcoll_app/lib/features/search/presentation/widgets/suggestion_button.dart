@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../../shared/widgets/app_dialog.dart';
 import '../../../../core/utils/feedback_sonoro.dart';
+import '../../service/sugestao_service.dart';
 
 class SuggestionButton extends StatelessWidget {
   const SuggestionButton({super.key});
@@ -9,22 +10,29 @@ class SuggestionButton extends StatelessWidget {
     final controller = TextEditingController();
     showDialog(
       context: context,
-      builder: (dialogContext) => AppDialog(
-        title: 'Enviar sugestão',
-        hintText: 'Digite uma colocação',
-        controller: controller,
-        confirmText: 'Enviar',
-        cancelText: 'Cancelar',
-        onConfirm: () {
-          final suggestion = controller.text.trim();
-          if (suggestion.isEmpty) return;
-          debugPrint('Sugestão enviada: "$suggestion"');
-          // TODO: quando o POST real for implementado, mover a linha
-          // abaixo para dentro do retorno de sucesso da chamada HTTP.
-          tocarFeedbackConfirmacao();
-          Navigator.of(dialogContext).pop();
-        },
-      ),
+      builder:
+          (dialogContext) => AppDialog(
+            title: 'Enviar sugestão',
+            hintText: 'Digite uma colocação',
+            controller: controller,
+            confirmText: 'Enviar',
+            cancelText: 'Cancelar',
+            onConfirm: () async {
+              final suggestion = controller.text.trim();
+              if (suggestion.isEmpty) return;
+
+              try {
+                final sucesso = await enviarSugestao(suggestion);
+                if (sucesso) {
+                  tocarFeedbackConfirmacao();
+                }
+                if (dialogContext.mounted) Navigator.of(dialogContext).pop();
+              } catch (e) {
+                debugPrint('Falha ao enviar sugestão: $e');
+                // TODO: mostrar feedback de erro ao usuário (SnackBar, por exemplo)
+              }
+            },
+          ),
     );
   }
 
@@ -40,12 +48,10 @@ class SuggestionButton extends StatelessWidget {
         child: ElevatedButton(
           onPressed: () => _showDialog(context),
           style: ElevatedButton.styleFrom(
-            backgroundColor: isDark
-                ? const Color(0xFF1F2429)
-                : const Color(0xFFE9EEF0),
-            foregroundColor: isDark
-                ? const Color(0xFF7A848C)
-                : const Color(0xFF4A4F55),
+            backgroundColor:
+                isDark ? const Color(0xFF1F2429) : const Color(0xFFE9EEF0),
+            foregroundColor:
+                isDark ? const Color(0xFF7A848C) : const Color(0xFF4A4F55),
             elevation: 0,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
