@@ -14,7 +14,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
   final List<Map<String, String>> _paginas = [
     {
-      'titulo': 'Aprenda termos técnicos com facilidade',
+      'titulo': 'Aprenda colocações com facilidade',
       'descricao':
           'Pesquise por colocações em inglês usadas na área de Ciência e Tecnologia de Alimentos.',
       'imagem': 'assets/images/1.png',
@@ -22,13 +22,13 @@ class _OnboardingPageState extends State<OnboardingPage> {
     {
       'titulo': 'Veja exemplos e pronúncias',
       'descricao':
-          'Cada termo apresenta tradução, exemplos em frases e áudio para praticar a pronúncia.',
+          'Cada colocação apresenta tradução, exemplos em frases e áudio para praticar a pronúncia.',
       'imagem': 'assets/images/2.png',
     },
     {
       'titulo': 'Salve e consulte quando quiser',
       'descricao':
-          'Favorite termos importantes e acesse rapidamente sempre que precisar.',
+          'Favorite colocações importantes e acesse rapidamente sempre que precisar.',
       'imagem': 'assets/images/3.png',
     },
   ];

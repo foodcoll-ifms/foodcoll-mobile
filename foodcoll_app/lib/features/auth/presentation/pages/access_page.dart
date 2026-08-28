@@ -49,7 +49,7 @@ class AccessPage extends StatelessWidget {
                         // ),
                         const SizedBox(height: 8),
                         const Text(
-                          'Colocações Técnicas da Ciência e\nTecnologia de Alimentos',
+                          'Colocações da Ciência e Tecnologia\n de Alimentos',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontFamily: 'Inter',
