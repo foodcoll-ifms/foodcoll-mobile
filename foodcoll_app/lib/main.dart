@@ -10,11 +10,13 @@ import 'features/splash/presentation/pages/splash_page.dart';
 import 'features/onboarding/presentation/pages/onboarding_page.dart';
 import 'features/auth/presentation/pages/access_page.dart';
 import 'shared/models/collocation_model.dart';
+import 'core/state/favorites_controller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await HistoricoController.instance.carregar();
   await AppController.instance.carregar();
+  await FavoritesController.instance.carregar();
   runApp(const MyApp());
 }
 

@@ -8,6 +8,10 @@ class FonteModel {
       url: json['url']?.toString() ?? '',
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {'url': url};
+  }
 }
 
 class CollocationModel {
@@ -58,5 +62,24 @@ class CollocationModel {
           .map((f) => FonteModel.fromJson(f as Map<String, dynamic>))
           .toList(),
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'colocacao': colocacao,
+      'traducao': traducao,
+      'fonetica': fonetica,
+      // reconstrói o formato aninhado que o fromJson espera
+      'exemplos_uso': [
+        {'en': exemploEn, 'pt': exemploPt},
+      ],
+      'informacoes_gramaticais': {
+        'classe': infClasse,
+        'estrutura': infEstrutura,
+      },
+      'observacao': observacao,
+      'remissivas': remissivas,
+      'fontes': fontes.map((f) => f.toJson()).toList(),
+    };
   }
 }
