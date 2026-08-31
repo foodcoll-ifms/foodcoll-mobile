@@ -17,7 +17,7 @@ class SettingsPage extends StatelessWidget {
           return Column(
             spacing: 30,
             children: [
-              PageHeader(title: "Configurações", onBack: () => true),
+              PageHeader(title: "Configurações", onBack: () => Navigator.pushReplacementNamed(context, '/home')),
               ListView(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),

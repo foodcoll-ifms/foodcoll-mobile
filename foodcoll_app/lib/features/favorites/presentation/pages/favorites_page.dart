@@ -20,7 +20,7 @@ class FavoritesPage extends StatelessWidget {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              PageHeader(title: "Meus Favoritos", onBack: () => Navigator.pop(context)),
+              PageHeader(title: "Meus Favoritos", onBack: () => Navigator.pushReplacementNamed(context, '/home'),),
               const SizedBox(height: 24),
               if (favorites.isEmpty)
                 const Expanded(
