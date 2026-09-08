@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../../core/base_page.dart';
 import '../../../../core/state/app_controller.dart';
 import '../../../../shared/widgets/page_header.dart';
@@ -17,13 +18,19 @@ class SettingsPage extends StatelessWidget {
           return Column(
             spacing: 30,
             children: [
-              PageHeader(title: "Configurações", onBack: () => Navigator.pushReplacementNamed(context, '/home')),
+              PageHeader(
+                title: "Configurações",
+                onBack: () => Navigator.pushReplacementNamed(context, '/home'),
+              ),
               ListView(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 children: [
                   SwitchListTile(
-                    secondary: const Icon(Icons.dark_mode, color: Color(0xFF1FA7A6)),
+                    secondary: const Icon(
+                      Icons.dark_mode,
+                      color: Color(0xFF1FA7A6),
+                    ),
                     minLeadingWidth: 60,
                     title: const Text("Modo Escuro"),
                     value: AppController.instance.darkMode,
@@ -32,11 +39,16 @@ class SettingsPage extends StatelessWidget {
                     inactiveThumbColor: const Color(0xFFFFFFFF),
                     activeThumbColor: const Color(0xFFFFFFFF),
                     activeTrackColor: const Color(0xFFA8D5D4),
-                    trackOutlineColor: WidgetStateProperty.all(Colors.transparent),
+                    trackOutlineColor: WidgetStateProperty.all(
+                      Colors.transparent,
+                    ),
                   ),
                   const Divider(color: Color(0xFFA8D5D4), thickness: 2),
                   SwitchListTile(
-                    secondary: const Icon(Icons.volume_up, color: Color(0xFF1FA7A6)),
+                    secondary: const Icon(
+                      Icons.volume_up,
+                      color: Color(0xFF1FA7A6),
+                    ),
                     minLeadingWidth: 60,
                     title: const Text("Feedback sonoro"),
                     value: AppController.instance.somAtivado,
@@ -45,11 +57,16 @@ class SettingsPage extends StatelessWidget {
                     inactiveThumbColor: const Color(0xFFFFFFFF),
                     activeThumbColor: const Color(0xFFFFFFFF),
                     activeTrackColor: const Color(0xFFA8D5D4),
-                    trackOutlineColor: WidgetStateProperty.all(Colors.transparent),
+                    trackOutlineColor: WidgetStateProperty.all(
+                      Colors.transparent,
+                    ),
                   ),
                   const Divider(color: Color(0xFFA8D5D4), thickness: 2),
                   ListTile(
-                    leading: const Icon(Icons.format_size, color: Color(0xFF1FA7A6)),
+                    leading: const Icon(
+                      Icons.format_size,
+                      color: Color(0xFF1FA7A6),
+                    ),
                     minLeadingWidth: 60,
                     title: const Text("Tamanho da fonte"),
                     trailing: DropdownButton<double>(
@@ -65,7 +82,8 @@ class SettingsPage extends StatelessWidget {
                         DropdownMenuItem(value: 1.3, child: Text("G")),
                       ],
                       onChanged: (value) {
-                        if (value != null) AppController.instance.setFontSize(value);
+                        if (value != null)
+                          AppController.instance.setFontSize(value);
                       },
                     ),
                   ),
@@ -74,12 +92,30 @@ class SettingsPage extends StatelessWidget {
                     leading: const Icon(Icons.info, color: Color(0xFF1FA7A6)),
                     minLeadingWidth: 60,
                     title: const Text("Sobre o App"),
-                    onTap: () => showAboutDialog(
-                      context: context,
-                      applicationName: 'FoodColl',
-                      applicationVersion: '1.0.0',
-                      applicationLegalese: 'Projeto de Iniciação Científica',
-                    ),
+                    onTap:
+                        () => showAboutDialog(
+                          context: context,
+                          applicationName: 'FoodColl',
+                          applicationVersion: '1.0.1',
+                          applicationLegalese:
+                              'Projeto de Iniciação Científica',
+                          children: [
+                            const SizedBox(height: 16),
+                            InkWell(
+                              onTap:
+                                  () => launchUrl(
+                                    Uri.parse('https://foodcoll.com.br'),
+                                  ),
+                              child: const Text(
+                                'foodcoll.com.br',
+                                style: TextStyle(
+                                  color: Color(0xFF1FA7A6),
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                   ),
                   const Divider(color: Color(0xFFA8D5D4), thickness: 2),
                 ],

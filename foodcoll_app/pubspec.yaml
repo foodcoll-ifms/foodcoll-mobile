@@ -2,7 +2,7 @@ name: foodcoll_app
 description: "FoodColl Mobile — Glossário bilíngue de collocations técnicas em Ciência e Tecnologia de Alimentos."
 publish_to: 'none'
 
-version: 1.0.0+1
+version: 1.0.1+2
 
 environment:
   sdk: ^3.7.2
@@ -15,6 +15,7 @@ dependencies:
   shared_preferences: ^2.3.0
   cupertino_icons: ^1.0.8
   audioplayers: ^6.1.0
+  url_launcher: ^6.3.0
 
 dev_dependencies:
   flutter_test:
